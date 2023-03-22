@@ -45,8 +45,8 @@ namespace AdvancedLogViewer.UI.Items
 
             if (HighlightSearchResult)
             {
-                this.BackColor = Color.Yellow;
-                this.ForeColor = Color.Red;
+                this.BackColor = Color.LightGoldenrodYellow;
+                this.ForeColor = Color.Black;
             }
         }
 
