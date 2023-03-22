@@ -34,6 +34,7 @@ namespace AdvancedLogViewer.UI.Controls
             this.typeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.classColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.messageColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.customColumns = new List<System.Windows.Forms.ColumnHeader>();
 
             this.logImageList = new System.Windows.Forms.ImageList(this.components);
 
@@ -88,6 +89,7 @@ namespace AdvancedLogViewer.UI.Controls
         private System.Windows.Forms.ColumnHeader typeColumn;
         private System.Windows.Forms.ColumnHeader classColumn;
         private System.Windows.Forms.ColumnHeader messageColumn;
+        private List<System.Windows.Forms.ColumnHeader> customColumns;
         private System.Windows.Forms.ImageList logImageList;
 
     }

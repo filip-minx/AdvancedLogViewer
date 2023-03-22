@@ -105,7 +105,11 @@ namespace AdvancedLogViewer.UI.Controls
 
             foreach (var customPattern in customHeaders)
             {
-                Columns.Insert(Columns.Count - 1, customPattern.CustomFieldKey);
+                var columnHeader = new ColumnHeader();
+                columnHeader.Text = customPattern.CustomFieldKey;
+                columnHeader.Width = 80;
+                Columns.Insert(Columns.Count - 1, columnHeader);
+                customColumns.Add(columnHeader);
             }
         }
 
@@ -142,6 +146,12 @@ namespace AdvancedLogViewer.UI.Controls
             {
                 classColumn.Tag = left;
                 left += space + classColumn.Width;
+            }
+
+            foreach (var customColumn in customColumns)
+            {
+                customColumn.Tag = left;
+                left += space + customColumn.Width;
             }
 
             if (this.messageColumn.ListView != null)
@@ -213,6 +223,12 @@ namespace AdvancedLogViewer.UI.Controls
             if (column == messageColumn)
             {
                 ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(owner.FilterManager.CurrentFilter.Messages, selectedLogEntry != null ? selectedLogEntry.Message : String.Empty, column, null);
+                return;
+            }
+            if (customColumns.Contains(column))
+            {
+                var columnValue = selectedLogEntry.CustomFields.First(c => c.Key == column.Text).Value;
+                ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(owner.FilterManager.CurrentFilter.Messages, selectedLogEntry != null ? columnValue : String.Empty, column, null);
                 return;
             }
         }
