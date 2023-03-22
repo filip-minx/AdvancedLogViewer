@@ -34,6 +34,7 @@ using Scarfsail.Common.BL;
 using System.Text.RegularExpressions;
 using AdvancedLogViewer.UI.Controls;
 using AdvancedLogViewer.BL.FindText;
+using Sarfsail.Common.UI.SyntaxHighlighter;
 
 namespace AdvancedLogViewer.UI
 {
@@ -848,6 +849,13 @@ namespace AdvancedLogViewer.UI
                             this.extractMessageContentButton.Enabled = true;
                             this.logMessageEdit.Enabled = true;
 
+
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"[{}[\]\:,\'\r\n\\""]", DescriptorType.ToEOL, Color.DarkMagenta, SyntaxHighlightingTextBox.DefaultFont, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "false|true|null", DescriptorType.Word, Color.Brown, this.Font, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "\\b(?:[0-9]*\\.)?[0-9]+\\b", DescriptorType.Word, Color.DarkBlue, this.Font, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"""[^""\\]*(?:\\.[^""\\]*)*""", DescriptorType.Word, Color.Orange, this.Font, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"""[^""\\]*(?:\\.[^""\\]*)*"":", DescriptorType.Word, Color.DarkBlue, this.Font, false);
+                            
                             //Load file names of other parts of the log
                             this.openOtherPartsButton.DropDown.Items.Clear();
                             var items = GetOtherPartNamesOfLog().ToArray();
@@ -2475,11 +2483,14 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
             this.ShowLoadedLog(false, true);
         }
 
-        private void logMessageEdit_TextChanged(object sender, EventArgs e)
+        private bool IsJson(string message)
         {
-            this.CheckKeyword("Success", Color.Purple, 0);
-            this.CheckKeyword("JamfTrust", Color.Green, 0);
+            var regex = new Regex(@"""([^""]+)"":[""]*([^,^}^""]+)", RegexOptions.IgnoreCase);
+            var match = regex.IsMatch(message);
+            return match;
         }
+
+
         private void CheckKeyword(string word, Color color, int startIndex)
         {
             if (this.logMessageEdit.Text.Contains(word))
@@ -2496,11 +2507,9 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
             }
         }
 
-        private bool IsJson(string message)
+        private void logMessageEdit_TextChanged(object sender, EventArgs e)
         {
-            var regex = new Regex(@"""([^""]+)"":[""]*([^,^}^""]+)", RegexOptions.IgnoreCase);
-            var match = regex.IsMatch(message);
-            return match;
+            
         }
     }
 
