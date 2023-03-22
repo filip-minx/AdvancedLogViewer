@@ -2475,27 +2475,6 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
             this.ShowLoadedLog(false, true);
         }
 
-        private void logMessageEdit_TextChanged(object sender, EventArgs e)
-        {
-            this.CheckKeyword("Success", Color.Purple, 0);
-            this.CheckKeyword("JamfTrust", Color.Green, 0);
-        }
-        private void CheckKeyword(string word, Color color, int startIndex)
-        {
-            if (this.logMessageEdit.Text.Contains(word))
-            {
-                int index = -1;
-                int selectStart = this.logMessageEdit.SelectionStart;
-                while ((index = this.logMessageEdit.Text.IndexOf(word, (index + 1))) != -1)
-                {
-                    this.logMessageEdit.Select((index + startIndex), word.Length);
-                    this.logMessageEdit.SelectionColor = color;
-                    this.logMessageEdit.Select(selectStart, 0);
-                    this.logMessageEdit.SelectionColor = Color.Black;
-                }
-            }
-        }
-
         private bool IsJson(string message)
         {
             var regex = new Regex(@"""([^""]+)"":[""]*([^,^}^""]+)", RegexOptions.IgnoreCase);
@@ -2503,11 +2482,6 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
             return match;
         }
 
-        private void logMessageEdit_TextChanged(object sender, EventArgs e)
-        {
-            this.CheckKeyword("Success", Color.Purple, 0);
-            this.CheckKeyword("JamfTrust", Color.Green, 0);
-        }
 
         private void CheckKeyword(string word, Color color, int startIndex)
         {
@@ -2515,7 +2489,6 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
             {
                 int index = -1;
                 int selectStart = this.logMessageEdit.SelectionStart;
-
                 while ((index = this.logMessageEdit.Text.IndexOf(word, (index + 1))) != -1)
                 {
                     this.logMessageEdit.Select((index + startIndex), word.Length);
@@ -2524,6 +2497,12 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
                     this.logMessageEdit.SelectionColor = Color.Black;
                 }
             }
+        }
+
+        private void logMessageEdit_TextChanged(object sender, EventArgs e)
+        {
+            this.CheckKeyword("Success", Color.Purple, 0);
+            this.CheckKeyword("JamfTrust", Color.Green, 0);
         }
     }
 
