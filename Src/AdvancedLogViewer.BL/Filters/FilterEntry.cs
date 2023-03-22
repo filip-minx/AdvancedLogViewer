@@ -279,8 +279,6 @@ namespace AdvancedLogViewer.BL.Filters
             this.Messages = new FilterItemMessage(xmlElement, "Messages");
 
             this.DateTimeRange = new FilterItemDate(xmlElement, "DateTime");
-
-            this.CustomFilters = new Dictionary<string, FilterItemMessage>();
         }
 
         protected override void SaveData(XElement xmlElement)

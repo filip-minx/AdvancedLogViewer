@@ -104,6 +104,7 @@ namespace AdvancedLogViewer.UI.Controls
         {
             var customHeaders = logParser.LogPattern.PatternItems.Where(p => p.ItemType == PatternItemType.Custom);
 
+            customColumns.Clear();
             foreach (var customPattern in customHeaders)
             {
                 var columnHeader = new ColumnHeader();
@@ -117,6 +118,7 @@ namespace AdvancedLogViewer.UI.Controls
 
         public void InitializeFiltersForCustomColumns()
         {
+            owner.FilterManager.CurrentFilter.CustomFilters = new Dictionary<string, FilterItemMessage>();
             foreach (var customColumn in customColumns)
             {
                 owner.FilterManager.CurrentFilter.CustomFilters.Add(customColumn.Name, new FilterItemMessage(null, customColumn.Name));
