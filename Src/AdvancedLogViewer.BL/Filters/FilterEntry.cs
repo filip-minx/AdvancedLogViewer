@@ -249,6 +249,8 @@ namespace AdvancedLogViewer.BL.Filters
                 return filterMessages;
             }
         }
+
+
         
         public string FilterName { get; set; }
         public Guid FilterId { get; private set; }
@@ -258,6 +260,8 @@ namespace AdvancedLogViewer.BL.Filters
         public FilterItemText Types { get; private set; }
         public FilterItemText Classes { get; private set; }
         public FilterItemMessage Messages { get; private set; }
+
+        public Dictionary<string, FilterItemMessage>  CustomFilters { get; set; }
 
         public override string ToString()
         {
@@ -275,6 +279,8 @@ namespace AdvancedLogViewer.BL.Filters
             this.Messages = new FilterItemMessage(xmlElement, "Messages");
 
             this.DateTimeRange = new FilterItemDate(xmlElement, "DateTime");
+
+            this.CustomFilters = new Dictionary<string, FilterItemMessage>();
         }
 
         protected override void SaveData(XElement xmlElement)

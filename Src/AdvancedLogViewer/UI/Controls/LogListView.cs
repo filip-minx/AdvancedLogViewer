@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using static AdvancedLogViewer.BL.Filters.FilterEntry;
 
 namespace AdvancedLogViewer.UI.Controls
 {
@@ -110,6 +111,9 @@ namespace AdvancedLogViewer.UI.Controls
                 columnHeader.Width = 80;
                 Columns.Insert(Columns.Count - 1, columnHeader);
                 customColumns.Add(columnHeader);
+
+                //TODO move
+                owner.FilterManager.CurrentFilter.CustomFilters.Add(customPattern.CustomFieldKey, new FilterItemMessage(null, customPattern.CustomFieldKey));
             }
         }
 
@@ -228,7 +232,8 @@ namespace AdvancedLogViewer.UI.Controls
             if (customColumns.Contains(column))
             {
                 var columnValue = selectedLogEntry.CustomFields.First(c => c.Key == column.Text).Value;
-                ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(owner.FilterManager.CurrentFilter.Messages, selectedLogEntry != null ? columnValue : String.Empty, column, null);
+                var filter = owner.FilterManager.CurrentFilter.CustomFilters.First(f => f.Key == column.Text).Value;
+                ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(filter, selectedLogEntry != null ? columnValue : String.Empty, column, null);
                 return;
             }
         }

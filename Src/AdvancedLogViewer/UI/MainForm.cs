@@ -905,6 +905,19 @@ namespace AdvancedLogViewer.UI
             }
         }
 
+        public bool MatchesCustomFilter(FilterEntry filter, LogEntry logEntry)
+        {
+            foreach(var filterRecord in filter.CustomFilters)
+            {
+                var customValue = logEntry.CustomFields.First(l => l.Key == filterRecord.Key).Value;
+                if (!filterRecord.Value.Match(customValue))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public void ShowLoadedLog(bool loadingInProgress, bool resetSearchResults)
         {
             if (this.logParser == null)
@@ -948,7 +961,8 @@ namespace AdvancedLogViewer.UI
                                                 (filter.Threads.Match(logEntry.Thread)) &&
                                                 (filter.Types.Match(logEntry.Type)) &&
                                                 (filter.Classes.Match(logEntry.Class)) &&
-                                               (filter.Messages.Match(logEntry.Message, filterMessages))
+                                               (filter.Messages.Match(logEntry.Message, filterMessages)) &&
+                                               MatchesCustomFilter(filter, logEntry)
                                               ))
                                   select logEntry;
                     }
