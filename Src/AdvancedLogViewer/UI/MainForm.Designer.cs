@@ -19,7 +19,7 @@
             }
             base.Dispose(disposing);
         }
-         
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -55,7 +55,7 @@
             this.markersPanelParent = new System.Windows.Forms.Panel();
             this.markerPanel = new Scarfsail.Common.UI.Controls.MarkerPanel();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.logMessageEdit = new System.Windows.Forms.RichTextBox();
+            this.logMessageEdit = new Sarfsail.Common.UI.SyntaxHighlighter.SyntaxHighlightingTextBox();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.sqlFilterPanel = new System.Windows.Forms.Panel();
             this.sqlFilterControl = new AdvancedLogViewer.UI.Controls.SqlFilterControl();
@@ -1167,7 +1167,6 @@
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -1258,7 +1257,6 @@
         private System.Windows.Forms.ToolStripMenuItem editConfigFileDirectlyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator logAdjusterMenuDivider;
         private System.Windows.Forms.ToolStripMenuItem logLevelAdjustmentSettingsToolStripMenuItem;
-        private System.Windows.Forms.RichTextBox logMessageEdit;
         private System.Windows.Forms.ToolStripButton openInTextEditorButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem openInExternalTextEditorToolStripMenuItem;
@@ -1279,6 +1277,7 @@
         private Controls.SqlFilterControl sqlFilterControl;
         private System.Windows.Forms.Panel searchMarkersPanelParent;
         private Scarfsail.Common.UI.Controls.MarkerPanel searchMarkerPanel;
+        private Sarfsail.Common.UI.SyntaxHighlighter.SyntaxHighlightingTextBox logMessageEdit;
     }
 }
 
