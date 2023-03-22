@@ -401,7 +401,7 @@
             this.logMessageEdit.TabIndex = 7;
             this.logMessageEdit.Text = "Open some log first ...";
             this.logMessageEdit.WordWrap = false;
-            this.logMessageEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.logMessageEdit_KeyDown);
+            this.logMessageEdit.TextChanged += logMessageEdit_TextChanged;
             // 
             // splitter2
             // 

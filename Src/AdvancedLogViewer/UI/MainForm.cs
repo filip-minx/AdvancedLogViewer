@@ -2477,11 +2477,14 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
             this.ShowLoadedLog(false, true);
         }
 
-        private void logMessageEdit_TextChanged(object sender, EventArgs e)
+        private bool IsJson(string message)
         {
-            this.CheckKeyword("Success", Color.Purple, 0);
-            this.CheckKeyword("JamfTrust", Color.Green, 0);
+            var regex = new Regex(@"""([^""]+)"":[""]*([^,^}^""]+)", RegexOptions.IgnoreCase);
+            var match = regex.IsMatch(message);
+            return match;
         }
+
+
         private void CheckKeyword(string word, Color color, int startIndex)
         {
             if (this.logMessageEdit.Text.Contains(word))
@@ -2498,11 +2501,10 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
             }
         }
 
-        private bool IsJson(string message)
+        private void logMessageEdit_TextChanged(object sender, EventArgs e)
         {
-            var regex = new Regex(@"""([^""]+)"":[""]*([^,^}^""]+)", RegexOptions.IgnoreCase);
-            var match = regex.IsMatch(message);
-            return match;
+            this.CheckKeyword("Success", Color.Purple, 0);
+            this.CheckKeyword("JamfTrust", Color.Green, 0);
         }
     }
 
