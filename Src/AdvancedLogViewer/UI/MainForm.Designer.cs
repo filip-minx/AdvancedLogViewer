@@ -55,7 +55,7 @@
             this.markersPanelParent = new System.Windows.Forms.Panel();
             this.markerPanel = new Scarfsail.Common.UI.Controls.MarkerPanel();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.logMessageEdit = new System.Windows.Forms.RichTextBox();
+            this.logMessageEdit = new Sarfsail.Common.UI.SyntaxHighlighter.SyntaxHighlightingTextBox();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.sqlFilterPanel = new System.Windows.Forms.Panel();
             this.sqlFilterControl = new AdvancedLogViewer.UI.Controls.SqlFilterControl();

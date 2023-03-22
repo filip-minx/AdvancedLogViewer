@@ -34,6 +34,7 @@ using Scarfsail.Common.BL;
 using System.Text.RegularExpressions;
 using AdvancedLogViewer.UI.Controls;
 using AdvancedLogViewer.BL.FindText;
+using Sarfsail.Common.UI.SyntaxHighlighter;
 
 namespace AdvancedLogViewer.UI
 {
@@ -848,8 +849,13 @@ namespace AdvancedLogViewer.UI
                             this.extractMessageContentButton.Enabled = true;
                             this.logMessageEdit.Enabled = true;
 
-                            //logMessageEdit.AddHighlightDescriptor()
 
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"[{}[\]\:,\'\r\n\\""]", DescriptorType.ToEOL, Color.DarkMagenta, SyntaxHighlightingTextBox.DefaultFont, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "false|true|null", DescriptorType.Word, Color.Brown, this.Font, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "\\b(?:[0-9]*\\.)?[0-9]+\\b", DescriptorType.Word, Color.DarkBlue, this.Font, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"""[^""\\]*(?:\\.[^""\\]*)*""", DescriptorType.Word, Color.Orange, this.Font, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"""[^""\\]*(?:\\.[^""\\]*)*"":", DescriptorType.Word, Color.DarkBlue, this.Font, false);
+                            
                             //Load file names of other parts of the log
                             this.openOtherPartsButton.DropDown.Items.Clear();
                             var items = GetOtherPartNamesOfLog().ToArray();
@@ -2503,8 +2509,7 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
 
         private void logMessageEdit_TextChanged(object sender, EventArgs e)
         {
-            this.CheckKeyword("Success", Color.Purple, 0);
-            this.CheckKeyword("JamfTrust", Color.Green, 0);
+            
         }
     }
 
