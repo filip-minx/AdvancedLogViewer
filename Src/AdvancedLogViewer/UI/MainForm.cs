@@ -853,7 +853,7 @@ namespace AdvancedLogViewer.UI
 
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"[{}[\]\:,\'\r\n\\""]", DescriptorType.ToEOL, Color.DarkMagenta, logMessageEdit.Font, false);
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "false|true|null", DescriptorType.Word, Color.Brown, logMessageEdit.Font, false);
-                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "\\b(?:[0-9]*\\.)?[0-9]+\\b", DescriptorType.Word, Color.Blue, logMessageEdit.Font, false);
+                            logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "\\b(?:[0-9]*\\.)?[0-9]+\\b", DescriptorType.Word, Color.ForestGreen, logMessageEdit.Font, false);
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"""[^""\\]*(?:\\.[^""\\]*)*""", DescriptorType.Word, Color.Orange, logMessageEdit.Font, false);
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"""[^""\\]*(?:\\.[^""\\]*)*"":", DescriptorType.Word, Color.DarkBlue, logMessageEdit.Font, false);
 
