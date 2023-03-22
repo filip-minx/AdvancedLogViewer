@@ -237,9 +237,13 @@ namespace AdvancedLogViewer.UI.Controls
             }
             if (customColumns.Contains(column))
             {
-                var columnValue = selectedLogEntry.CustomFields.First(c => c.Key == column.Name).Value;
+                var columnValue = String.Empty;
+                if (selectedLogEntry != null)
+                {
+                    columnValue = selectedLogEntry.CustomFields.First(c => c.Key == column.Name).Value;
+                }
                 var filter = owner.FilterManager.CurrentFilter.CustomFilters.First(f => f.Key == column.Name).Value;
-                ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(filter, selectedLogEntry != null ? columnValue : String.Empty, column, null);
+                ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(filter, columnValue, column, null);
                 return;
             }
         }
