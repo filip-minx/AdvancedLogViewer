@@ -2474,6 +2474,13 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
             }
             this.ShowLoadedLog(false, true);
         }
+
+        private bool IsJson(string message)
+        {
+            var regex = new Regex(@"""([^""]+)"":[""]*([^,^}^""]+)", RegexOptions.IgnoreCase);
+            var match = regex.IsMatch(message);
+            return match;
+        }
     }
 
 
