@@ -333,7 +333,7 @@ namespace AdvancedLogViewer.UI.Controls
 
                     foreach (var customFilter in filter.CustomFilters)
                     {
-                        if (customFilter.Value.Enabled)
+                        if (customFilter.Value.Enabled && customFilter.Value.Items.Count > 0)
                         {
                             var customColumn = customColumns.First(c => c.Name == customFilter.Key);
                             customColumn.Text += filterChar;
