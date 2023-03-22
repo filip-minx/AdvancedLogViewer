@@ -107,13 +107,19 @@ namespace AdvancedLogViewer.UI.Controls
             foreach (var customPattern in customHeaders)
             {
                 var columnHeader = new ColumnHeader();
+                columnHeader.Name = customPattern.CustomFieldKey;
                 columnHeader.Text = customPattern.CustomFieldKey;
                 columnHeader.Width = 80;
                 Columns.Insert(Columns.Count - 1, columnHeader);
                 customColumns.Add(columnHeader);
+            }
+        }
 
-                //TODO move
-                owner.FilterManager.CurrentFilter.CustomFilters.Add(customPattern.CustomFieldKey, new FilterItemMessage(null, customPattern.CustomFieldKey));
+        public void InitializeFiltersForCustomColumns()
+        {
+            foreach (var customColumn in customColumns)
+            {
+                owner.FilterManager.CurrentFilter.CustomFilters.Add(customColumn.Name, new FilterItemMessage(null, customColumn.Name));
             }
         }
 
@@ -231,8 +237,8 @@ namespace AdvancedLogViewer.UI.Controls
             }
             if (customColumns.Contains(column))
             {
-                var columnValue = selectedLogEntry.CustomFields.First(c => c.Key == column.Text).Value;
-                var filter = owner.FilterManager.CurrentFilter.CustomFilters.First(f => f.Key == column.Text).Value;
+                var columnValue = selectedLogEntry.CustomFields.First(c => c.Key == column.Name).Value;
+                var filter = owner.FilterManager.CurrentFilter.CustomFilters.First(f => f.Key == column.Name).Value;
                 ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(filter, selectedLogEntry != null ? columnValue : String.Empty, column, null);
                 return;
             }
@@ -291,6 +297,10 @@ namespace AdvancedLogViewer.UI.Controls
             typeColumn.Text = typeColumn.Text.TrimEnd(filterChar);
             classColumn.Text = classColumn.Text.TrimEnd(filterChar);
             messageColumn.Text = messageColumn.Text.TrimEnd(filterChar);
+            foreach(var customColumn in customColumns)
+            {
+                customColumn.Text = customColumn.Text.TrimEnd(filterChar);
+            }
 
             FilterEntry filter = owner.FilterManager.CurrentFilter;
             if (owner.FiltersEnabled || owner.FilterManager.CurrentFilter.DateTimeRange.Enabled)
@@ -313,6 +323,15 @@ namespace AdvancedLogViewer.UI.Controls
                     if (filter.Messages.Enabled && filter.Messages.GetItemsWithColorHighlights(owner.ColorHighlightManager.CurrentGroup.Highlights).Count > 0)
                     {
                         messageColumn.Text += filterChar;
+                    }
+
+                    foreach (var customFilter in filter.CustomFilters)
+                    {
+                        if (customFilter.Value.Enabled)
+                        {
+                            var customColumn = customColumns.First(c => c.Name == customFilter.Key);
+                            customColumn.Text += filterChar;
+                        }
                     }
                 }
             }
