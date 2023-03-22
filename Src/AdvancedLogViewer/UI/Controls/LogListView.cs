@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using static AdvancedLogViewer.BL.Filters.FilterEntry;
 
 namespace AdvancedLogViewer.UI.Controls
 {
@@ -99,6 +100,31 @@ namespace AdvancedLogViewer.UI.Controls
                 this.Columns.Insert(this.Columns.Count - 1, classColumn);
         }
 
+        public void AddCustomColumnHeaders(LogParser logParser)
+        {
+            var customHeaders = logParser.LogPattern.PatternItems.Where(p => p.ItemType == PatternItemType.Custom);
+
+            customColumns.Clear();
+            foreach (var customPattern in customHeaders)
+            {
+                var columnHeader = new ColumnHeader();
+                columnHeader.Name = customPattern.CustomFieldKey;
+                columnHeader.Text = customPattern.CustomFieldKey;
+                columnHeader.Width = 80;
+                Columns.Insert(Columns.Count - 1, columnHeader);
+                customColumns.Add(columnHeader);
+            }
+        }
+
+        public void InitializeFiltersForCustomColumns()
+        {
+            owner.FilterManager.CurrentFilter.CustomFilters = new Dictionary<string, FilterItemMessage>();
+            foreach (var customColumn in customColumns)
+            {
+                owner.FilterManager.CurrentFilter.CustomFilters.Add(customColumn.Name, new FilterItemMessage(null, customColumn.Name));
+            }
+        }
+
         public void SetColumnSizes()
         {
             if (resizingColumns)
@@ -132,6 +158,12 @@ namespace AdvancedLogViewer.UI.Controls
             {
                 classColumn.Tag = left;
                 left += space + classColumn.Width;
+            }
+
+            foreach (var customColumn in customColumns)
+            {
+                customColumn.Tag = left;
+                left += space + customColumn.Width;
             }
 
             if (this.messageColumn.ListView != null)
@@ -205,6 +237,17 @@ namespace AdvancedLogViewer.UI.Controls
                 ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(owner.FilterManager.CurrentFilter.Messages, selectedLogEntry != null ? selectedLogEntry.Message : String.Empty, column, null);
                 return;
             }
+            if (customColumns.Contains(column))
+            {
+                var columnValue = String.Empty;
+                if (selectedLogEntry != null)
+                {
+                    columnValue = selectedLogEntry.CustomFields.First(c => c.Key == column.Name).Value;
+                }
+                var filter = owner.FilterManager.CurrentFilter.CustomFilters.First(f => f.Key == column.Name).Value;
+                ShowPopupFilterEdit<FilterSettingsMessage, FilterEntry.FilterItemMessage, string>(filter, columnValue, column, null);
+                return;
+            }
         }
 
         private void ShowPopupFilterEdit<TControl, TItem, TContentType>(TItem filterItem, TContentType currentItemValue, ColumnHeader column, Func<List<string>> getDistinctValues)
@@ -260,6 +303,10 @@ namespace AdvancedLogViewer.UI.Controls
             typeColumn.Text = typeColumn.Text.TrimEnd(filterChar);
             classColumn.Text = classColumn.Text.TrimEnd(filterChar);
             messageColumn.Text = messageColumn.Text.TrimEnd(filterChar);
+            foreach(var customColumn in customColumns)
+            {
+                customColumn.Text = customColumn.Text.TrimEnd(filterChar);
+            }
 
             FilterEntry filter = owner.FilterManager.CurrentFilter;
             if (owner.FiltersEnabled || owner.FilterManager.CurrentFilter.DateTimeRange.Enabled)
@@ -282,6 +329,15 @@ namespace AdvancedLogViewer.UI.Controls
                     if (filter.Messages.Enabled && filter.Messages.GetItemsWithColorHighlights(owner.ColorHighlightManager.CurrentGroup.Highlights).Count > 0)
                     {
                         messageColumn.Text += filterChar;
+                    }
+
+                    foreach (var customFilter in filter.CustomFilters)
+                    {
+                        if (customFilter.Value.Enabled)
+                        {
+                            var customColumn = customColumns.First(c => c.Name == customFilter.Key);
+                            customColumn.Text += filterChar;
+                        }
                     }
                 }
             }

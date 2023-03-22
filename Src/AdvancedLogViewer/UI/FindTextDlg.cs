@@ -274,6 +274,19 @@ namespace AdvancedLogViewer.UI
                             ||
                             (compiledSearchInput.MatchPatternType(PatternItemType.Message) && SearchText(compiledSearchInput, logEntry.Message));
 
+                    if (compiledSearchInput.MatchPatternType(PatternItemType.Custom))
+                    {
+                        foreach (var customField in logEntry.CustomFields)
+                        {
+                            var foundInCustomField = SearchText(compiledSearchInput, customField.Value);
+
+                            if (!foundInCustomField) continue;
+
+                            found = true;
+                            break;
+                        }
+                    }
+
                     if (found)
                     {
                         logEntry.FoundOnLine = i;
