@@ -26,6 +26,11 @@ namespace AdvancedLogViewer.UI.Items
             if (LogItem.Class != null)
                 this.SubItems.Add(LogItem.Class);       //3
 
+            foreach (var customField in LogItem.CustomFields)
+            {
+                this.SubItems.Add(customField.Value);
+            }
+
             this.SubItems.Add(logItem.Message);
             //this.SubItems.Add(logItem.Message.Substring(0, Math.Min(logItem.Message.Length, maxLengthOfMessage)));     //4             
 

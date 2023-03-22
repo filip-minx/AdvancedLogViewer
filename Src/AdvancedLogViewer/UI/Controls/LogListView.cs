@@ -97,11 +97,15 @@ namespace AdvancedLogViewer.UI.Controls
                 this.Columns.Remove(classColumn);
             else if (classColumn.ListView == null)
                 this.Columns.Insert(this.Columns.Count - 1, classColumn);
+        }
 
-            var customPatterns = logParser.LogPattern.PatternItems.Where(p => p.ItemType == PatternItemType.Custom);
-            foreach(var customPattern in customPatterns)
+        public void AddCustomColumnHeaders(LogParser logParser)
+        {
+            var customHeaders = logParser.LogPattern.PatternItems.Where(p => p.ItemType == PatternItemType.Custom);
+
+            foreach (var customPattern in customHeaders)
             {
-                this.Columns.Insert(this.Columns.Count - 1, customPattern.CustomFieldKey);
+                Columns.Insert(Columns.Count - 1, customPattern.CustomFieldKey);
             }
         }
 

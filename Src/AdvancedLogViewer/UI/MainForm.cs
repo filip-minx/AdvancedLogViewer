@@ -586,6 +586,9 @@ namespace AdvancedLogViewer.UI
                     //Set columns visible
                     this.logListView.SetColumnsVisibility(logParser);
 
+                    //Add custom columns
+                    logListView.AddCustomColumnHeaders(logParser);
+
                     this.logListView.SetColumnSizes();
                     log.Debug("Columns visibility set");
 
