@@ -849,13 +849,14 @@ namespace AdvancedLogViewer.UI
                             this.extractMessageContentButton.Enabled = true;
                             this.logMessageEdit.Enabled = true;
 
+                            logMessageEdit.Height = Convert.ToInt32(this.Height * 0.4);
 
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"[{}[\]\:,\'\r\n\\""]", DescriptorType.ToEOL, Color.DarkMagenta, logMessageEdit.Font, false);
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "false|true|null", DescriptorType.Word, Color.Brown, logMessageEdit.Font, false);
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, "\\b(?:[0-9]*\\.)?[0-9]+\\b", DescriptorType.Word, Color.Blue, logMessageEdit.Font, false);
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"""[^""\\]*(?:\\.[^""\\]*)*""", DescriptorType.Word, Color.Orange, logMessageEdit.Font, false);
                             logMessageEdit.AddHighlightDescriptor(DescriptorRecognition.RegEx, @"""[^""\\]*(?:\\.[^""\\]*)*"":", DescriptorType.Word, Color.DarkBlue, logMessageEdit.Font, false);
-                            
+
                             //Load file names of other parts of the log
                             this.openOtherPartsButton.DropDown.Items.Clear();
                             var items = GetOtherPartNamesOfLog().ToArray();
@@ -2509,7 +2510,7 @@ ForceParser {0}{0}- Force the parser specified after the colon instead of using 
 
         private void logMessageEdit_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
     }
 
