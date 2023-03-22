@@ -848,6 +848,8 @@ namespace AdvancedLogViewer.UI
                             this.extractMessageContentButton.Enabled = true;
                             this.logMessageEdit.Enabled = true;
 
+                            //logMessageEdit.AddHighlightDescriptor()
+
                             //Load file names of other parts of the log
                             this.openOtherPartsButton.DropDown.Items.Clear();
                             var items = GetOtherPartNamesOfLog().ToArray();
